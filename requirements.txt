@@ -1,0 +1,6 @@
+customtkinter
+Pillow
+discord.py
+requests
+pyarmor
+python-nmap
