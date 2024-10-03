@@ -39,7 +39,15 @@ git clone https://github.com/3sub/Crystal-interface.git
 cd Crystal-interface
 ```
 
-Étape 2 : Configuration des chemins d'accès
+##Étape 2 : Installation des dépendances
+
+Pour installer toutes les dépendances nécessaires, exécutez la commande suivante dans votre terminal :
+
+```bash
+pip install -r requirements.txt
+```
+
+##Étape 3 : Configuration des chemins d'accès
 
 remplacez les chemins d'accès dans votre code par les bons répertoires. Par exemple, modifiez :
 
