@@ -25,7 +25,7 @@
 
 Avant de pouvoir utiliser **Crystal Interface**, assurez-vous d'avoir installé les logiciels et bibliothèques suivants :
 
-- **Python 3.10.0
+- **Python 3.10.0**
 - **Pip** (le gestionnaire de paquets Python)
 
 ## Installation
@@ -35,5 +35,26 @@ Avant de pouvoir utiliser **Crystal Interface**, assurez-vous d'avoir installé 
 Clonez ce dépôt sur votre machine locale ou téléchargez-le en tant que fichier ZIP.
 
 ```bash
-git clone https://github.com/3sub/Crystal-Interface.git
-cd Crystal-Interface
+git clone https://github.com/3sub/Crystal-interface.git
+cd Crystal-interface
+```
+
+Étape 2 : Configuration des chemins d'accès
+
+remplacez les chemins d'accès dans votre code par les bons répertoires. Par exemple, modifiez :
+
+
+r"C:\Users\flipp\Desktop\dev\python\multi-tool\banniere.jpg"
+
+par :
+
+
+r"C:\Users\username\Desktop\dev\python\multi-tool\banniere.jpg"
+
+Étape 3 : Output Directory
+
+N'oubliez pas de configurer le répertoire de output :
+
+
+"C:\Users\flipp\Desktop\dev\python\multi-tool\output"
+
