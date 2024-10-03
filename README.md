@@ -76,8 +76,7 @@ Voici un tutoriel vidéo sur l'installation et l'utilisation de Crystal Interfac
 
 Voici quelques captures d'écran de **Crystal Interface** :
 
-![Capture d'écran 1](images/capture1.png)
-![Capture d'écran 2](images/capture2.png)
+![Capture d'écran 1](images/capture-1.png)
 
 
 
