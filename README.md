@@ -25,8 +25,7 @@
 
 Avant de pouvoir utiliser **Crystal Interface**, assurez-vous d'avoir installé les logiciels et bibliothèques suivants :
 
-- **Python 3.10.0**
-- **Pip** (le gestionnaire de paquets Python)
+- **Python 3.10.0**   [py-3.10.0](https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe)
 
 ## Installation
 
