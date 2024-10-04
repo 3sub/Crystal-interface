@@ -68,10 +68,10 @@ N'oubliez pas de configurer le répertoire de output :
 
 "C:\Users\flipp\Desktop\dev\python\multi-tool\output"
 
-## Tutoriel Vidéo bientot disponible
+## Tutoriel Vidéo
 
 Voici un tutoriel vidéo sur l'installation et l'utilisation de Crystal Interface :
-[Regarder le tutoriel sur YouTube](https://www.youtube.com/)
+[Regarder le tutoriel sur YouTube](https://youtu.be/8ehJIb-naPs)
 
 
 ## Images du Projet
