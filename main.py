@@ -278,7 +278,7 @@ class CrystalFrame(ctk.CTkFrame):
 
     def open_discord_server(self):
         """Ouvre l'URL du serveur Discord."""
-        discord_url = "https://discord.gg/black-gold"
+        discord_url = "https://discord.gg/VTkZ88GB"
         webbrowser.open(discord_url)
 
 
