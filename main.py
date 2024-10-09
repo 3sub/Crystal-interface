@@ -4,6 +4,7 @@ from tkinter import Label, messagebox, filedialog
 from PIL import Image, ImageTk, ImageSequence
 from discord.ext import commands
 import discord
+import time
 import os
 import requests
 import threading
@@ -27,6 +28,8 @@ class MainApp:
 
         ctk.set_appearance_mode("system")  
         ctk.set_default_color_theme("blue")  
+
+        self.api_key = 'c2J5anRoa29mdDR5YWltYndjanFwbXhzOGh1b3Zk'
 
         self.set_window_icon("favicon.ico")
 
@@ -73,6 +76,10 @@ class MainApp:
         self.osint_label = ctk.CTkLabel(self.frame_left, text="OSINT Tools", font=("Arial", 16, "bold"), text_color="#FFFFFF")
         self.osint_label.pack(pady=(30, 10))
 
+        # API Snusbase
+        self.snusbaseapi_button = ctk.CTkButton(self.frame_left, text="API Snusbase", command=self.show_snusbaseapi_frame, fg_color="#FF4D4D", hover_color="#FF6666", corner_radius=8)
+        self.snusbaseapi_button.pack(pady=10, padx=15)
+
         # OSINT DB
         self.osint_db_button = ctk.CTkButton(self.frame_left, text="OSINT DB", command=self.show_osint_db_frame, fg_color="#FF4D4D", hover_color="#FF6666", corner_radius=8)
         self.osint_db_button.pack(pady=10, padx=15)
@@ -114,6 +121,7 @@ class MainApp:
         self.obfuscator_frame = ObfuscatorFrame(self.frame_right)
         self.raidserv_frame = RaidservFrame(self.frame_right)
         self.dmallfriends_frame = DmallfriendsFrame(self.frame_right)
+        self.snusbaseapi_frame = SnusbaseAPIFrame(self.frame_right, self.api_key)
         self.osint_db_frame = OSINTDBFrame(self.frame_right)
         self.gobuster_frame = GobusterFrame(self.frame_right)
         self.dnspy_frame = DnspyFrame(self.frame_right)
@@ -131,47 +139,51 @@ class MainApp:
 
     def show_crystal_frame(self):
         self.crystal_frame.pack(fill="both", expand=True)
-        self.hide_other_frames([self.webhook_frame, self.token_frame, self.compiler_frame, self.backdoor_frame, self.obfuscator_frame, self.raidserv_frame, self.dmallfriends_frame, self.osint_db_frame, self.gobuster_frame, self.dnspy_frame])
+        self.hide_other_frames([self.webhook_frame, self.token_frame, self.compiler_frame, self.backdoor_frame, self.obfuscator_frame, self.raidserv_frame, self.dmallfriends_frame, self.snusbaseapi_frame, self.osint_db_frame, self.gobuster_frame, self.dnspy_frame])
 
     def show_webhook_frame(self):
         self.webhook_frame.pack(fill="both", expand=True)
-        self.hide_other_frames([self.crystal_frame, self.token_frame, self.compiler_frame, self.backdoor_frame, self.obfuscator_frame, self.raidserv_frame, self.dmallfriends_frame, self.osint_db_frame, self.gobuster_frame, self.dnspy_frame])
+        self.hide_other_frames([self.crystal_frame, self.token_frame, self.compiler_frame, self.backdoor_frame, self.obfuscator_frame, self.raidserv_frame, self.dmallfriends_frame, self.snusbaseapi_frame, self.osint_db_frame, self.gobuster_frame, self.dnspy_frame])
 
     def show_token_frame(self):
         self.token_frame.pack(fill="both", expand=True)
-        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.compiler_frame, self.backdoor_frame, self.obfuscator_frame, self.raidserv_frame, self.dmallfriends_frame, self.osint_db_frame, self.gobuster_frame, self.dnspy_frame])
+        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.compiler_frame, self.backdoor_frame, self.obfuscator_frame, self.raidserv_frame, self.dmallfriends_frame, self.snusbaseapi_frame, self.osint_db_frame, self.gobuster_frame, self.dnspy_frame])
 
     def show_compiler_frame(self):
         self.compiler_frame.pack(fill="both", expand=True)
-        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.token_frame, self.backdoor_frame, self.obfuscator_frame, self.raidserv_frame, self.dmallfriends_frame, self.osint_db_frame, self.gobuster_frame, self.dnspy_frame])
+        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.token_frame, self.backdoor_frame, self.obfuscator_frame, self.raidserv_frame, self.dmallfriends_frame, self.snusbaseapi_frame, self.osint_db_frame, self.gobuster_frame, self.dnspy_frame])
 
     def show_backdoor_frame(self):
         self.backdoor_frame.pack(fill="both", expand=True)
-        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.token_frame, self.compiler_frame, self.obfuscator_frame, self.raidserv_frame, self.dmallfriends_frame, self.osint_db_frame, self.gobuster_frame, self.dnspy_frame])
+        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.token_frame, self.compiler_frame, self.obfuscator_frame, self.raidserv_frame, self.dmallfriends_frame, self.snusbaseapi_frame, self.osint_db_frame, self.gobuster_frame, self.dnspy_frame])
 
     def show_obfuscator_frame(self):
         self.obfuscator_frame.pack(fill="both", expand=True)
-        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.token_frame, self.compiler_frame, self.backdoor_frame, self.raidserv_frame, self.dmallfriends_frame, self.osint_db_frame, self.gobuster_frame, self.dnspy_frame])
+        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.token_frame, self.compiler_frame, self.backdoor_frame, self.raidserv_frame, self.dmallfriends_frame, self.snusbaseapi_frame, self.osint_db_frame, self.gobuster_frame, self.dnspy_frame])
 
     def show_raidserv_frame(self):
         self.raidserv_frame.pack(fill="both", expand=True)
-        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.token_frame, self.compiler_frame, self.backdoor_frame, self.dmallfriends_frame, self.obfuscator_frame, self.osint_db_frame, self.gobuster_frame, self.dnspy_frame])
+        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.token_frame, self.compiler_frame, self.backdoor_frame, self.dmallfriends_frame, self.obfuscator_frame, self.snusbaseapi_frame, self.osint_db_frame, self.gobuster_frame, self.dnspy_frame])
 
     def show_dmallfriends_frame(self):
         self.dmallfriends_frame.pack(fill="both", expand=True)
-        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.token_frame, self.compiler_frame, self.backdoor_frame, self.obfuscator_frame, self.raidserv_frame, self.osint_db_frame, self.gobuster_frame, self.dnspy_frame])
+        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.token_frame, self.compiler_frame, self.backdoor_frame, self.obfuscator_frame, self.raidserv_frame, self.snusbaseapi_frame, self.osint_db_frame, self.gobuster_frame, self.dnspy_frame])
+
+    def show_snusbaseapi_frame(self):
+        self.snusbaseapi_frame.pack(fill="both", expand=True)
+        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.token_frame, self.compiler_frame, self.backdoor_frame, self.obfuscator_frame, self.raidserv_frame, self.dmallfriends_frame, self.osint_db_frame, self.gobuster_frame, self.dnspy_frame])
 
     def show_osint_db_frame(self):
         self.osint_db_frame.pack(fill="both", expand=True) 
-        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.token_frame, self.compiler_frame, self.backdoor_frame, self.obfuscator_frame, self.raidserv_frame, self.dmallfriends_frame, self.gobuster_frame, self.dnspy_frame])
+        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.token_frame, self.compiler_frame, self.backdoor_frame, self.obfuscator_frame, self.raidserv_frame, self.dmallfriends_frame, self.snusbaseapi_frame, self.gobuster_frame, self.dnspy_frame])
 
     def show_gobuster_frame(self):
         self.gobuster_frame.pack(fill="both", expand=True)
-        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.token_frame, self.compiler_frame, self.backdoor_frame, self.obfuscator_frame, self.raidserv_frame, self.dmallfriends_frame, self.osint_db_frame, self.dnspy_frame])
+        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.token_frame, self.compiler_frame, self.backdoor_frame, self.obfuscator_frame, self.raidserv_frame, self.dmallfriends_frame, self.snusbaseapi_frame, self.osint_db_frame, self.dnspy_frame])
 
     def show_dnspy_frame(self):
         self.dnspy_frame.pack(fill="both", expand=True)
-        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.token_frame, self.compiler_frame, self.backdoor_frame, self.obfuscator_frame, self.raidserv_frame, self.dmallfriends_frame, self.osint_db_frame, self.gobuster_frame])
+        self.hide_other_frames([self.crystal_frame, self.webhook_frame, self.token_frame, self.compiler_frame, self.backdoor_frame, self.obfuscator_frame, self.raidserv_frame, self.dmallfriends_frame, self.snusbaseapi_frame, self.osint_db_frame, self.gobuster_frame])
 
     def hide_other_frames(self, frames_to_hide):
         for frame in frames_to_hide:
@@ -221,7 +233,7 @@ class CrystalFrame(ctk.CTkFrame):
 
         self.image_canvas = ctk.CTkCanvas(self.gradient_canvas, bg="#2C2F33", highlightthickness=0)
         self.image_canvas.pack(pady=0) 
-        self.load_image(r"C:\Users\flipp\Desktop\dev\python\multi-tool\banniere.jpg")
+        self.load_image(r"C:\Users\flipp\Desktop\Crystal-interface-main\banniere.jpg")
 
         self.border_frame = ctk.CTkFrame(self.gradient_canvas, bg_color="#2C2F33", border_width=5, border_color="#c00404")
         self.border_frame.pack(padx=10, pady=10, fill="both", expand=True)  
@@ -274,11 +286,11 @@ class CrystalFrame(ctk.CTkFrame):
     def on_resize(self, event):
         """Redessine le rectangle lorsque la fenêtre change de taille."""
         self.update_background_size()
-        self.load_image(r"C:\Users\flipp\Desktop\dev\python\crystal\banniere.jpg") 
+        self.load_image(r"C:\Users\flipp\Desktop\Crystal-interface-main\banniere.jpg") 
 
     def open_discord_server(self):
         """Ouvre l'URL du serveur Discord."""
-        discord_url = "https://discord.gg/VTkZ88GB"
+        discord_url = "https://discord.gg/leakfr"
         webbrowser.open(discord_url)
 
 
@@ -407,7 +419,8 @@ class WebhookFrame(ctk.CTkFrame):
         self.master.clipboard_append(info_text)
         messagebox.showinfo("Info", "Webhook info copied to clipboard!")
 
-# --- Classe pour la section Tokens --- 
+
+# --- Classe pour la section Tokens ---
 class TokenFrame(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
@@ -428,15 +441,23 @@ class TokenFrame(ctk.CTkFrame):
         self.pub_message_entry = ctk.CTkEntry(self, width=400, height=40, placeholder_text="Your message")
         self.pub_message_entry.pack(pady=10)
 
-        self.result_label = ctk.CTkLabel(self, text="", font=("Arial", 14))
-        self.result_label.pack(pady=10)
-
         self.ping_var = ctk.BooleanVar()
         self.ping_checkbox = ctk.CTkCheckBox(self, text="Enable user ping", variable=self.ping_var)
         self.ping_checkbox.pack(pady=10)
 
-        self.result_label = ctk.CTkLabel(self, text="", font=("Arial", 14))
-        self.result_label.pack(pady=10)
+        self.token_info_button = ctk.CTkButton(self, text="Token Info", command=self.token_info, width=200, fg_color="#4682B4", hover_color="#87CEEB")
+        self.token_info_button.pack(pady=10)
+
+        result_frame = ctk.CTkFrame(self)
+        result_frame.pack(pady=10, fill="both", expand=True)
+
+        self.result_textbox = ctk.CTkTextbox(result_frame, width=500, height=300, wrap="none", font=("Courier", 12))
+        self.result_textbox.pack(side="left", fill="both", expand=True)
+
+        scrollbar = ctk.CTkScrollbar(result_frame, command=self.result_textbox.yview)
+        scrollbar.pack(side="right", fill="y")
+
+        self.result_textbox.configure(yscrollcommand=scrollbar.set)
 
         self.bot_thread = None
 
@@ -445,7 +466,9 @@ class TokenFrame(ctk.CTkFrame):
         pub_message = self.pub_message_entry.get()
 
         if not token or not pub_message:
-            self.result_label.configure(text="❌ Missing token or message!", text_color="red")
+            self.result_textbox.configure(state="normal")
+            self.result_textbox.insert("end", "❌ Missing token or message!\n", "error")
+            self.result_textbox.configure(state="disabled")
             return
 
         self.bot_thread = threading.Thread(target=self.run_discord_bot, args=(token, pub_message))
@@ -456,28 +479,92 @@ class TokenFrame(ctk.CTkFrame):
 
         @bot.event
         async def on_ready():
-            self.result_label.configure(text=f"✅ Logged in as {bot.user.name}", text_color="green")
-
+            self.result_textbox.configure(state="normal")
+            self.result_textbox.insert("end", f"Logged in as {bot.user.name}\n", "info")
             await self.send_advertisement(bot, pub_message)
+            self.result_textbox.configure(state="disabled")
 
         try:
             bot.run(token)
         except Exception as e:
-            self.result_label.configure(text=f"❌ Error while connecting: {e}", text_color="red")
+            self.result_textbox.configure(state="normal")
+            self.result_textbox.insert("end", f"Error while connecting: {e}\n", "error")
+            self.result_textbox.configure(state="disabled")
 
     async def send_advertisement(self, bot, message):
         for guild in bot.guilds:
             for member in guild.members:
-                if not member.bot:  
+                if not member.bot:
                     try:
-                        if self.ping_var.get():  
+                        if self.ping_var.get():
                             await member.send(f'{member.mention} {message}')
                         else:
                             await member.send(message)
-                    except discord.Forbidden:
-                        pass 
 
-        self.result_label.configure(text="✅ Advertisement sent to all servers!", text_color="green")
+                        self.result_textbox.configure(state="normal")
+                        self.result_textbox.insert("end", f"Message sent to {member.name} (ID: {member.id})\n", "info")
+                        self.result_textbox.configure(state="disabled")
+
+                    except discord.Forbidden:
+                        self.result_textbox.configure(state="normal")
+                        self.result_textbox.insert("end", f"❌ Could not send message to {member.name} (ID: {member.id})\n", "error")
+                        self.result_textbox.configure(state="disabled")
+
+        self.result_textbox.configure(state="normal")
+        self.result_textbox.insert("end", "Message sent to all servers!\n", "info")
+        self.result_textbox.configure(state="disabled")
+
+    def token_info(self):
+        token = self.token_entry.get()
+
+        if not token:
+            self.result_textbox.configure(state="normal")
+            self.result_textbox.insert("end", "❌ Missing token!\n", "error")
+            self.result_textbox.configure(state="disabled")
+            return
+
+        self.bot_thread = threading.Thread(target=self.run_token_info, args=(token,))
+        self.bot_thread.start()
+
+    def run_token_info(self, token):
+        bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
+
+        @bot.event
+        async def on_ready():
+            self.result_textbox.configure(state="normal")
+            self.result_textbox.delete("1.0", "end") 
+            self.result_textbox.insert("end", "Fetching information...\n", "info")
+            self.result_textbox.configure(state="disabled")
+
+            time.sleep(1) 
+
+            info_text = "Bot Information\n"
+            info_text += f"Logged in as: {bot.user.name} (ID: {bot.user.id})\n"
+            info_text += f"Avatar URL: {bot.user.display_avatar.url}\n\n"
+            info_text += "Servers Connected:\n"
+
+            for guild in bot.guilds:
+                info_text += f"- {guild.name} (ID: {guild.id}) — {guild.member_count} members\n"
+
+            info_text += "\n" + "-" * 50 + "\n"
+
+            self.result_textbox.configure(state="normal")
+            self.result_textbox.delete("1.0", "end")
+            self.result_textbox.insert("end", info_text, "info")
+            self.result_textbox.configure(state="disabled")
+
+            await bot.close()
+
+        try:
+            bot.run(token)
+        except discord.errors.LoginFailure:
+            self.result_textbox.configure(state="normal")
+            self.result_textbox.insert("end", "❌ Invalid token! Please check your token.\n", "error")
+            self.result_textbox.configure(state="disabled")
+        except Exception as e:
+            self.result_textbox.configure(state="normal")
+            self.result_textbox.insert("end", f"❌ Error: {e}\n", "error")
+            self.result_textbox.configure(state="disabled")
 
 
 # --- Classe pour la section Compilateur --- 
@@ -1010,6 +1097,75 @@ class DmallfriendsFrame(ctk.CTkFrame):
         client.run(token, bot=False)
 
 
+
+
+# --- Classe UI SnusbaseAPIFrame ---
+class SnusbaseAPIFrame(ctk.CTkFrame):
+    def __init__(self, master, api_key_base64):
+        super().__init__(master)
+        self.master = master
+        self.api_key_base64 = api_key_base64
+
+        self.search_label = ctk.CTkLabel(self, text="Enter Search Term:", font=("Arial", 16))
+        self.search_label.pack(pady=10)
+
+        self.search_entry = ctk.CTkEntry(self, width=400, height=40, placeholder_text="Your search term here")
+        self.search_entry.pack(pady=10)
+
+        self.search_type_label = ctk.CTkLabel(self, text="Select Search Type:", font=("Arial", 16))
+        self.search_type_label.pack(pady=10)
+
+        self.search_type_option = ctk.CTkOptionMenu(self, values=["email", "username", "lastip", "hash", "password", "name"])
+        self.search_type_option.set("email")
+        self.search_type_option.pack(pady=10)
+
+        self.search_button = ctk.CTkButton(self, text="Search", command=self.start_search, width=200, fg_color="#02A9CB", hover_color="#0C758A")
+        self.search_button.pack(pady=20)
+
+        self.result_textbox = ctk.CTkTextbox(self, width=700, height=350)
+        self.result_textbox.pack(pady=10)
+
+        self.api_thread = None
+
+    def start_search(self):
+        search_term = self.search_entry.get().strip()
+        search_type = self.search_type_option.get()
+
+        if not search_term:
+            self.result_textbox.insert("end", "❌ Search term is required!\n")
+            return
+
+        self.api_thread = threading.Thread(target=self.run_search, args=(search_term, search_type))
+        self.api_thread.start()
+
+    def run_search(self, search_term, search_type):
+        snusbase_api = SnusbaseAPI(self.api_key_base64)
+        results = snusbase_api.search(search_term, search_type)
+
+        self.display_results(results)
+
+    def display_results(self, results):
+        self.result_textbox.delete('1.0', ctk.END)
+        if isinstance(results, dict):
+            if not results:
+                self.result_textbox.insert(ctk.END, "[+] No results found in the DB\n")
+            else:
+                for database, entries in results.items():
+                    self.result_textbox.insert(ctk.END, f"\nResults from {database}:\n")
+                    self.result_textbox.insert(ctk.END, "═════════════════════════════════════\n")
+                    for entry in entries:
+                        for key, value in entry.items():
+                            if key == 'lastip':
+                                self.result_textbox.insert(ctk.END, f"{key.capitalize()}: {value} (Get Location)\n")
+                            else:
+                                self.result_textbox.insert(ctk.END, f"{key.capitalize()}: {value}\n")
+                        self.result_textbox.insert(ctk.END, "-" * 50 + "\n")
+        elif isinstance(results, str):
+            self.result_textbox.insert(ctk.END, results + "\n")
+        else:
+            self.result_textbox.insert(ctk.END, "Unexpected result format.\n")
+
+
 # --- Classe pour la section OSINT DB ---
 class OSINTDBFrame(ctk.CTkFrame):
     def __init__(self, master):
@@ -1044,7 +1200,7 @@ class OSINTDBFrame(ctk.CTkFrame):
             messagebox.showerror("Error", "Please enter a search term.")
             return
 
-        search_dir = r"C:\Users\flipp\Desktop\dev\python\multi-tool\output"
+        search_dir = r"C:\Users\flipp\Desktop\Crystal-interface-main\output"
         
         if not os.path.exists(search_dir):
             self.display_results(f"Directory not found: {search_dir}")
