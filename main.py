@@ -224,7 +224,9 @@ class CrystalFrame(ctk.CTkFrame):
 
         self.image_canvas = ctk.CTkCanvas(self.gradient_canvas, bg="#2C2F33", highlightthickness=0)
         self.image_canvas.pack(pady=0) 
-        self.load_image(r"C:\Users\flipp\Desktop\dev\python\Crystal-interface-main\banniere.jpg")
+
+        # Charge l'image au démarrage
+        self.load_image(r"C:\Users\flipp\Desktop\Crystal-interface-main\banniere.jpg")
 
         self.border_frame = ctk.CTkFrame(self.gradient_canvas, bg_color="#2C2F33", border_width=5, border_color="#c00404")
         self.border_frame.pack(padx=10, pady=10, fill="both", expand=True)  
@@ -257,10 +259,15 @@ class CrystalFrame(ctk.CTkFrame):
 
     def load_image(self, image_path):
         """Charge et affiche l'image fixe en tant que bannière Discord."""
-        self.image = Image.open(image_path)
-        self.image = self.image.resize((564,188), Image.LANCZOS)  
-        self.image_tk = ImageTk.PhotoImage(self.image)
-        self.image_canvas.create_image(0, 0, image=self.image_tk, anchor=tk.NW)
+        try:
+            self.image = Image.open(image_path)
+            self.image = self.image.resize((564, 188), Image.LANCZOS)  
+            self.image_tk = ImageTk.PhotoImage(self.image)
+            self.image_canvas.create_image(0, 0, image=self.image_tk, anchor=tk.NW)
+        except FileNotFoundError:
+            print(f"Erreur : le fichier n'a pas été trouvé à l'emplacement : {image_path}")
+        except Exception as e:
+            print(f"Une erreur s'est produite lors du chargement de l'image : {e}")
 
     def update_background_size(self):
         """Redimensionne le fond pour occuper tout l'espace du canvas."""
@@ -276,8 +283,7 @@ class CrystalFrame(ctk.CTkFrame):
 
     def on_resize(self, event):
         """Redessine le rectangle lorsque la fenêtre change de taille."""
-        self.update_background_size()
-        self.load_image(r"C:\Users\flipp\Desktop\dev\python\Crystal-interface-main\banniere.jpg") 
+        self.update_background_size()  # Mettez à jour le fond lors du redimensionnement
 
     def open_discord_server(self):
         """Ouvre l'URL du serveur Discord."""
