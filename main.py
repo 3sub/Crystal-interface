@@ -29,7 +29,7 @@ class MainApp:
         ctk.set_appearance_mode("system")  
         ctk.set_default_color_theme("blue")  
 
-        self.api_key = 'c2J5anRoa29mdDR5YWltYndjanFwbXhzOGh1b3Zk'
+        self.api_key = 'YOUR-API-KEY'
 
         self.set_window_icon("favicon.ico")
 
